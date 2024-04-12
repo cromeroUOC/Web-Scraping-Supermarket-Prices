@@ -3,7 +3,8 @@
 ### Màster U. en Ciència de Dades - UOC
 
 ### Integrantes del grupo
-
+- Carlos Romero Matarin
+- Enric Sintes Arguimbau
 ### Estructura del repositorio
 
 Este repositorio incluye los siguientes componentes principales:

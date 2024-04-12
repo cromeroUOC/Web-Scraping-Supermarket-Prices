@@ -24,8 +24,8 @@ def main():
     crawl_sitemap_Dia(url_Dia_map, df_productos)
     crawl_sitemap_Consum(url_consum_map, df_productos)
 
-    # Guardar los datos en un archivo csv
-    df_productos.to_csv('productos.csv', index=False)
+    # Guardar los datos en un archivo csv en la carpeta dataset fuera de la carpeta source
+    df_productos.to_csv('../dataset/productos.csv', index=False)
 
 
 if __name__ == "__main__":
