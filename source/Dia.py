@@ -13,8 +13,6 @@ import re
 # url_superMerca_map = 'https://www.dia.es/sitemap.xml'
 
 # Función para obtener los datos de un producto
-from bs4 import BeautifulSoup
-import urllib3
 
 def datosProducto(urlProducto,df_productos):
     # Desactiva los warnings de certificados SSL
