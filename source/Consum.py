@@ -20,6 +20,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def datosProducto(driver, df_productos, urlProducto):
 
     try:
+        
         # Navega a la página
         driver.get(urlProducto)
 
@@ -41,6 +42,8 @@ def datosProducto(driver, df_productos, urlProducto):
         print(df_productos)
     except Exception as e:
         print("Error al obtener los datos del producto:", e)
+        driver.quit()
+        driver = webdriver.Chrome(ChromeDriverManager().install())
 
 
 def crawl_sitemap_Consum(url, df_productos):
