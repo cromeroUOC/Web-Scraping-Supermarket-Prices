@@ -6,17 +6,17 @@ from urllib.parse import urljoin
 import pandas as pd
 import re
 
-# Crear un DataFrame para guardar los productos, variable global para poder acceder a ella desde las funciones
-df_productos = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
+# # Crear un DataFrame para guardar los productos, variable global para poder acceder a ella desde las funciones
+# df_productos_dia = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
 
-url_superMerca = 'https://www.supermercadosmas.com/'
-url_superMerca_map = 'https://www.dia.es/sitemap.xml'
+# url_superMerca = 'https://www.supermercadosmas.com/'
+# url_superMerca_map = 'https://www.dia.es/sitemap.xml'
 
 # Función para obtener los datos de un producto
 from bs4 import BeautifulSoup
 import urllib3
 
-def datosProducto(urlProducto):
+def datosProducto(urlProducto,df_productos):
     # Desactiva los warnings de certificados SSL
     urllib3.disable_warnings()
     http = urllib3.PoolManager()
@@ -53,7 +53,7 @@ def datosProducto(urlProducto):
     except AttributeError:
         print('Error en producto:', urlProducto)
 
-def crawl_sitemap(url):
+def crawl_sitemap_Dia(url,df_productos):
     http = urllib3.PoolManager()
     response = http.request('GET', url)
     
@@ -65,13 +65,13 @@ def crawl_sitemap(url):
         
         for url in urls:
             loc = url.find('loc').text 
-            datosProducto(loc) 
+            datosProducto(loc,df_productos) 
     else:
         print("Failed to fetch sitemap:", response.status)
 
 
-if __name__ == '__main__':
-    crawl_sitemap(url_superMerca_map)
+# if __name__ == '__main__':
+#     crawl_sitemap(url_superMerca_map,df_productos_dia)
 
-    # Guardar los datos en un archivo CSV
-    df_productos.to_csv('productos_supermercadosmas.csv', index=False)
+#     # Guardar los datos en un archivo CSV
+#     df_productos.to_csv('productos_supermercadosmas.csv', index=False)

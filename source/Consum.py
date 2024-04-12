@@ -11,16 +11,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-url_consum = 'https://tienda.consum.es'
-url_consum_map = 'https://tienda.consum.es/sitemap_product_es.xml'
+# url_consum = 'https://tienda.consum.es'
+# url_consum_map = 'https://tienda.consum.es/sitemap_product_es.xml'
 
 # Crear un DataFrame para guardar los productos, variable global para poder acceder a ella desde las funciones
-df_productos = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
+# df_productos_Consum = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
 
-# Inicializar el navegador
-driver = webdriver.Chrome(ChromeDriverManager().install())
-
-def datosProducto(urlProducto):
+def datosProducto(driver, df_productos, urlProducto):
 
     try:
         # Navega a la página
@@ -46,7 +43,7 @@ def datosProducto(urlProducto):
         print("Error al obtener los datos del producto:", e)
 
 
-def crawl_sitemap(url):
+def crawl_sitemap_Consum(url, df_productos):
     http = urllib3.PoolManager()
     response = http.request('GET', url)
     
@@ -56,25 +53,24 @@ def crawl_sitemap(url):
         # Encontrar todos los tags <url>
         urls = soup.find_all('url')
         
+        # Inicializar el navegador
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+
         for url in urls:
             loc = url.find('loc').text 
             print(loc)
-            datosProducto(loc) 
+            datosProducto(driver, df_productos, loc) 
+
+        # Cerrar el navegador
+        driver.quit()
+
     else:
         print("Failed to fetch sitemap:", response.status)
 
 
-if __name__ == '__main__':
-    crawl_sitemap(url_consum_map)
-
-    #Cerrar el navegador
-    driver.quit()
-
-    # Guardar los datos en un archivo CSV
-    df_productos.to_csv('productos_supermercadosmas.csv', index=False)
-
-
-
-
-
-#https://www.compraonline.alcampo.es/sitemap.xml
+# if __name__ == '__main__':
+#     crawl_sitemap(url_consum_map, df_productos_Consum)
+#     #Cerrar el navegador
+#     driver.quit()
+#     # Guardar los datos en un archivo CSV
+#     df_productos.to_csv('productos_supermercadosmas.csv', index=False)

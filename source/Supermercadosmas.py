@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 import pandas as pd
 
 # Crear un DataFrame para guardar los productos, variable global para poder acceder a ella desde las funciones
-df_productos = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
+# df_productos = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
 
 # Para conocer el tipo de tecnologia con la que se creó la web
 # builtwith.parse('https://www.supermercadosmas.com/')
@@ -15,7 +15,7 @@ df_productos = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado'
 # print(whois.whois('https://www.supermercadosmas.com/'))
 
 # Función para obtener los datos de un producto
-def datosProducto(urlProducto):
+def datosProducto(urlProducto,df_productos):
     # Desactiva los warnings de certificados SSL
     urllib3.disable_warnings()
     http = urllib3.PoolManager()
@@ -44,7 +44,7 @@ def datosProducto(urlProducto):
         print('Error en producto:', urlProducto)
 
 # Función para sacar las urls de todos los artículos del supermercado
-def crawl_sitemap(url):
+def crawl_sitemap_SupermercadosMas(url,df_productos):
     http = urllib3.PoolManager()
     response = http.request('GET', url)
     
@@ -59,14 +59,14 @@ def crawl_sitemap(url):
             if priority and priority.text == '1.0':
                 loc = url.find('loc').text
                 print(loc)
-                datosProducto(loc)
+                datosProducto(loc,df_productos)
     else:
         print("Failed to fetch sitemap:", response.status)
 
 
-crawl_sitemap("https://www.supermercadosmas.com/pub/media/sitemap-1-1.xml")
-crawl_sitemap("https://www.supermercadosmas.com/pub/media/sitemap-1-2.xml")
+# crawl_sitemap("https://www.supermercadosmas.com/pub/media/sitemap-1-1.xml")
+# crawl_sitemap("https://www.supermercadosmas.com/pub/media/sitemap-1-2.xml")
 
-#Descargar los precios de los productos en excel
-df_productos.to_excel('productos_supermercados_mas.xlsx', index=False)
+# #Descargar los precios de los productos en excel
+# df_productos.to_excel('productos_supermercados_mas.xlsx', index=False)
 
