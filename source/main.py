@@ -31,18 +31,27 @@ def main():
         crawl_sitemap_Consum(url_consum_map, df_productos)
     except:
         print('Error en Consum')
+        df_productos.to_csv('productos.csv', index=False)
     try:    
         crawl_sitemap_SupermercadosMas(url_SupermercadosMas_1, df_productos)
         crawl_sitemap_SupermercadosMas(url_SupermercadosMas_2, df_productos)
     except:
         print('Error en SupermercadosMas')
+        df_productos.to_csv('productos.csv', index=False)
     try:
         crawl_sitemap_Dia(url_Dia_map, df_productos)
     except:
         print('Error en Dia')
+        df_productos.to_csv('productos.csv', index=False)
+        
+    try:
+        # Guardar los datos en un archivo csv en la carpeta dataset fuera de la carpeta source
+        df_productos.to_csv('productos.csv', index=False)
+        # df_productos.to_csv('../dataset/productos.csv', index=False)
+    except:
+        print('Error al guardar el archivo csv')
 
-    # Guardar los datos en un archivo csv en la carpeta dataset fuera de la carpeta source
-    df_productos.to_csv('../dataset/productos.csv', index=False)
+
 
 
 if __name__ == "__main__":
