@@ -47,7 +47,7 @@ def datosProducto(urlProducto,df_productos):
             marca = 'Marca no disponible'
 
         # Afegir les dades al DataFrame
-        df_productos.loc[len(df_productos)] = [nombre, marca, precio, 'Supermercados Mas', urlProducto]
+        df_productos.loc[len(df_productos)] = [nombre, marca, precio, 'Dia', urlProducto]
         print('Producto:', nombre, 'Marca:', marca, 'Precio:', precio)
     except AttributeError:
         print('Error en producto:', urlProducto)
