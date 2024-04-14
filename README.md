@@ -42,6 +42,14 @@ Els scripts no accepten paràmetres a través de la línia de comandes tal com e
 
 **Exemples**
 Per raspar dades de tots els supermercats i compilar-les en un fitxer CSV:
+    
+    ```bash
+    python main.py
+    ```
+Recordeu que aquesta comanda ha de ser executada des del directori `source/`.
+
+### Llicència
+Aquest projecte està llicenciat sota la llicència MIT. Consulteu el fitxer de llicència per obtenir més informació.
 
 ## DOI del Conjunt de Dades
 El DOI per al conjunt de dades generat a Zenodo és: `10.5281/zenodo.XXXXXXX` [Substituir amb el DOI real]
