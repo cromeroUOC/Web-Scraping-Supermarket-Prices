@@ -4,7 +4,7 @@ from Consum import crawl_sitemap_Consum
 from Dia import crawl_sitemap_Dia
 from Supermercadosmas import crawl_sitemap_SupermercadosMas
 
-
+#Definició de les urls
 url_consum = 'https://tienda.consum.es'
 url_consum_map = 'https://tienda.consum.es/sitemap_product_es.xml'
 
@@ -14,19 +14,19 @@ url_Dia_map = 'https://www.dia.es/sitemap.xml'
 url_SupermercadosMas_1 = 'https://www.supermercadosmas.com/pub/media/sitemap-1-1.xml'
 url_SupermercadosMas_2 = 'https://www.supermercadosmas.com/pub/media/sitemap-1-2.xml'
 
-
+# Funció principal
 def main():
-    #Mirar si existe el archivo de productos
+    #Revisar si el archiu existeix
     try:
-        # Si el archivo existe, cargarlo en un DataFrame
+        # Llegir el fitxer csv
         df_productos = pd.read_csv('../dataset/productos.csv')
-        #Borrar archivo para volver a cargarlo
+        # Eliminem les dades anteriors
         df_productos.drop(df_productos.index, inplace=True)
     except:
-        # Crear un DataFrame para guardar los productos
+        # Creació de un DataFrame per guardar els productes
         df_productos = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
 
-    # Llamamos a la función de cada supermercado:
+    # Cridar a les funcions per obtenir les dades
     try:
         crawl_sitemap_Consum(url_consum_map, df_productos)
     except:
@@ -45,14 +45,12 @@ def main():
         df_productos.to_csv('productos.csv', index=False)
         
     try:
-        # Guardar los datos en un archivo csv en la carpeta dataset fuera de la carpeta source
+        # Guardar el DataFrame en un archiu csv
         df_productos.to_csv('productos.csv', index=False)
         # df_productos.to_csv('../dataset/productos.csv', index=False)
     except:
         print('Error al guardar el archivo csv')
 
-
-
-
+# Executar la funció principal
 if __name__ == "__main__":
     main()

@@ -6,51 +6,53 @@ from urllib.parse import urljoin
 import pandas as pd
 import re
 
-# # Crear un DataFrame para guardar los productos, variable global para poder acceder a ella desde las funciones
+# Creació de un DataFrame per guardar els productes
 # df_productos_dia = pd.DataFrame(columns=['Nombre', 'Marca', 'Precio', 'Supermercado', 'URL'])
 
+# Url de Dia
 # url_superMerca = 'https://www.supermercadosmas.com/'
 # url_superMerca_map = 'https://www.dia.es/sitemap.xml'
 
-# Función para obtener los datos de un producto
-
+# Funció per obtenir les dades d'un producte de Dia
 def datosProducto(urlProducto,df_productos):
-    # Desactiva los warnings de certificados SSL
+    # Desactivar advertencias de SSL
     urllib3.disable_warnings()
+    # Realitzar la petició GET
     http = urllib3.PoolManager()
     response = http.request('GET', urlProducto)
     soup = BeautifulSoup(response.data, 'html.parser')
 
-    #Try para evitar errores en la ejecución, algunas url no tienen ya productos
+    #Try per si no troba el producte a la pàgina
     try:
-        #Encuentra el elemento que contiene el precio activo
+        #Troba l'element que conté el preu del producte
         precio_elemento = soup.find('p', class_='buy-box__active-price')
         if precio_elemento:
-            # Extrae el texto y limpia el precio, quitando espacios y caracteres no deseados
+            # Extreu el preu del text i el formateja
             precio = precio_elemento.text.strip().replace('\xa0€', ' €').replace(',', '.')
         else:
             precio = 'Precio no disponible'
 
-        # Encuentra el elemento que contiene el nombre del producto usando el nuevo selector
+        # Troba l'element que conté el nom del producte
         nombre_elemento = soup.find('h1', class_='product-title')
         if nombre_elemento:
             nombre = nombre_elemento.text.strip()
         else:
             nombre = 'Nombre no disponible'
 
-        # Encuentra el elemento que contiene la marca del producto
+        # Troba l'element que conté la marca del producte
         marca_elemento = soup.find('p', class_='manufacturer-info__name')
         if marca_elemento:
             marca = marca_elemento.text.strip()
         else:
             marca = 'Marca no disponible'
 
-        # # Añadir a la lista de productos
+        # Afegir les dades al DataFrame
         df_productos.loc[len(df_productos)] = [nombre, marca, precio, 'Supermercados Mas', urlProducto]
         print('Producto:', nombre, 'Marca:', marca, 'Precio:', precio)
     except AttributeError:
         print('Error en producto:', urlProducto)
 
+# Funció per obtenir les dades dels productes de Dia
 def crawl_sitemap_Dia(url,df_productos):
     http = urllib3.PoolManager()
     response = http.request('GET', url)
@@ -58,7 +60,7 @@ def crawl_sitemap_Dia(url,df_productos):
     if response.status == 200:
         soup = BeautifulSoup(response.data, 'html.parser')
         
-        # Encontrar todos los tags <url>
+        # Obtenir totes les URL del sitemap
         urls = soup.find_all('url')
         
         for url in urls:
