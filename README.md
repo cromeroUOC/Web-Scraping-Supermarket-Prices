@@ -16,6 +16,7 @@ Aquest repositori inclou els components principals següents:
   - `Supermercadosmas.py`: Script per extracció de dades de Supermercados Más.
   - `main.py`: Fitxer principal que executa les funcions de scraping i desa els resultats.
   - `requirements.txt`: Un fitxer que llista totes les biblioteques necessàries per executar els scripts.
+  - `analisi.py`: Fitxer que conté les funcions per a l'anàlisi de les dades.
 - `README.md`: Documentació del projecte.
 - `.gitignore` - Especifica els fitxers intencionadament no seguïts per ignorar.
 
