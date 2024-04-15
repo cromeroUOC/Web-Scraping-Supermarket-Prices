@@ -56,7 +56,3 @@ Aquest projecte està llicenciat sota la llicència MIT. Consulteu el fitxer de 
 El DOI per al conjunt de dades generat a Zenodo és:
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10971652.svg)](https://doi.org/10.5281/zenodo.10971652)
-
-
-Assegureu-vos que teniu els permisos adequats per raspar i redistribuir dades dels llocs web dels supermercats.
-
